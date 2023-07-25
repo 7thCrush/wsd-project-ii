@@ -1,0 +1,52 @@
+<% layout('./layouts/layout.eta') %>
+
+<h1><%= it.question.question_text %></h1>
+
+<h2>Add an option!</h2>
+<p>However, there can be only one correct option.</p>
+<p>Trying to add another correct option after one exists results in nothing being added to the options.</p>
+
+<% if (it.validationErrors) { %>
+<ul>
+    <% Object.keys(it.validationErrors).forEach((attribute) => { %>
+        <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+            <li><%= err %></li>
+        <% }); %>
+    <% }); %>
+</ul>
+<% } %>
+
+<form action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/options" method="POST">
+Option text:<br/>
+<textarea name="option_text"><%= it.option_text ? it.option_text : "" %></textarea><br/>
+Is correct:<br/>
+<input type="checkbox" name="is_correct" /><br/>
+<input type="submit" value="Add" id="add" />
+</form>
+
+<% if (it.options && it.options.length > 0) { %>
+
+<h2>Options</h2>
+
+<ul>
+<% it.options.forEach(option => { %>
+  <li>
+    <%= option.option_text %><br/>
+    This option is <%= option.is_correct %>.<br/>
+    <form action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/options/<%= option.id %>/delete" method="POST">
+        <input type="submit" value="Delete option" id="delete" />
+    </form>
+  </li>
+<% }); %>
+</ul>
+
+<% } else { %>
+
+<h2>No options yet.</h2>
+<p>You can delete the question.</p>
+
+<form action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/delete" method="POST">
+    <input type="submit" value="Delete question" id="delete" />
+</form>
+
+<% } %>

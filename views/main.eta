@@ -1,0 +1,18 @@
+<% layout("./layouts/layout.eta") %>
+
+<h1>Quiz application</h1>
+
+<p>This is an application where you can add and delete questions to topics and answer options to questions. Deleting questions and their answer options can be done from the specific question page. On top of that, you can answer random questions related to the topics in the quiz section.</p>
+<p>Also, authorized users (admins) can create and delete topics. Deleting topics can be done from the topics page.</p>
+<p>However, you have to register an account and log in before you can do those things. There are links below to do so.</p>
+
+<a href="/auth/login">Login</a><br/>
+<a href="/auth/register">Register</a><br/>
+
+<h1>Statistics:</h1>
+
+<p>Total number of topics: <%= it.topics %> topics.</p>
+<p>Total number of questions: <%= it.questions %> questions.</p>
+<p>Total number of question answers: <%= it.question_answers %> question answers.</p>
+
+<p>Note that question answers refer to the answers given to the questions in the quiz section of the application, not the available question options to the questions.</p>
